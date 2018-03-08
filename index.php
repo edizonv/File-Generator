@@ -13,7 +13,6 @@
 
 <form action="file-checked.php" method="POST" enctype="multipart/form-data">
 	<legend><h1>File Generator</h1></legend>
-	<br>
 	<dl>
 	    <dd><input type="hidden" name="root" value="root" required /></dd>
 
@@ -38,6 +37,7 @@
     </dl>
     <p><button name="submit-btn">Generate Files</button></p>
     <p><a href="checker">Check Files</a></p>
+    <p><a href="beta">Check images without alt</a></p>
     <div id="done"></div>
     <div id="result"></div>
 </form>

@@ -65,7 +65,7 @@ if($_POST['path'] && $_POST['newpath']) {
 
         $ex = explode("\\", $moveFiles);
 
-        if(end($ex) != "Thumbs.db" || $moveFiles != "thumbs.db"){
+        if(end($ex) != "Thumbs.db"){
             copy($file, $moveFilesx);
             $copied = 1;
             echo $file . '<br><strong>copied to</strong><br><span class="strong">' . newDirectory($moveFilesx) .'</span><br><br>';
