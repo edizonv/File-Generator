@@ -1,98 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>File Checker</title>
-	<?php if(basename($_SERVER['PHP_SELF']) != "index.php"): ?>
-		<meta HTTP-EQUIV="REFRESH" content="0; url=http://localhost/">
-	<?php endif; ?>
-	<link rel="stylesheet" href="style.css">
-</head>
-<body>
-<br><br>
+<?php require_once 'inc/header.php'; ?>
 
-<form action="file-checked.php" method="POST" enctype="multipart/form-data">
-	<legend><h1>File Generator</h1></legend>
+<form action="file-checked.php" method="POST" enctype="multipart/form-data" class="col-md-4 col-md-offset-4">
+	<legend><h2>File Generator</h2></legend>
 	<dl>
-	    <dd><input type="hidden" name="root" value="root" required /></dd>
-
-	    <dt><label for="path">Project Path:</label></dt>
-	    <dd><input type="text" id="path" name="path" required /></dd>
-
-	    <!-- <dt><label for="path">Save to :</label></dt> -->
-	    <dd><input type="hidden" id="newpath" name="newpath" value="<?php  echo getenv("HOMEDRIVE").getenv("HOMEPATH")."\Desktop\\".date("Ymd").'_files';  ?>" required /></dd>
-
-	    <dt><label for="path">From :</label></dt>
-	    <dd>
-	    	<ul class="dates">
-		    	<li><input type="date" id="from-date" name="from-date" value="<?php echo date("Y-m-d"); ?>" /></li>
-		    	<li><input type="text" id="hours" name="hours" value="00" /></li>
-		    	<li><input type="text" id="minutes" name="minutes" value="00" /></li>
-	    	</ul>
-	    </dd>
-
-	    <dt><label for="path">To :</label></dt>
-	    <dd><input type="date" id="to-date" name="to-date" value="<?php echo date("Y-m-d"); ?>" /></dd>
-
-    </dl>
-    <p><button name="submit-btn">Generate Files</button></p>
-    <p><a href="checker">Check Files</a></p>
-    <p><a href="beta">Check images without alt</a></p>
-    <div id="done"></div>
-    <div id="result"></div>
+    <dd><input type="hidden" name="root" value="root" required /></dd>
+    <dt><label for="path">Project Path:</label></dt>
+    <dd class="form-group"><input type="text" id="path" name="path" class="form-control" required data-toggle="tooltip" title="Paste the project path here." /></dd>
+    <!-- <dt><label for="path">Save to :</label></dt> -->
+    <dd><input type="hidden" id="newpath" name="newpath" value="<?php  echo getenv("HOMEDRIVE").getenv("HOMEPATH")."\Desktop\\".date("Ymd").'_files';  ?>" required /></dd>
+    <dt><label for="path">From :</label></dt>
+    <dd class="row form-group time">
+      <div class="col-md-6"><input type="date" class="form-control" id="from-date" name="from-date" value="<?php echo date("Y-m-d"); ?>" /></div>
+      <div class="col-md-3"><input type="number" class="form-control" id="hours" name="hours" value="00" /></div>
+      <div class="col-md-3"><input type="number" class="form-control" id="minutes" name="minutes" value="00" /></div>
+    </dd>
+    <dt><label for="path">To :</label></dt>
+    <dd class="form-group"><input type="date" id="to-date" name="to-date" class="form-control" value="<?php echo date("Y-m-d"); ?>" /></dd>
+  </dl>
+  <p class="text-right"><button name="submit-btn" class="btn btn-primary btn-lg">Generate Files</button></p>
+  <ul>
+    <li><a href="checker">Check Files</a></li>
+    <!-- <li><a href="beta">Check images without alt</a></li> -->
+  </ul>
+  <div id="done"></div>
+  <div id="result"></div>
 </form>
 
-<script src="jquery.js"></script>
-<script>
-	$(function() {
-		var btn = $('button');
-		btn.on('click', function(e) {
-			e.preventDefault();
-			var form = $('form'),
-				data = form.serialize(),
-				action = form.attr('action'),
-				method = form.attr('method'),
-				fromDate = $('#from-date').val(),
-				toDate = $('#to-date').val();
-
-			splitFromDate = fromDate.split('-');
-			splitToDate = toDate.split('-');
-
-			dateFrom = splitFromDate[0]+splitFromDate[1]+splitFromDate[2];
-			dateTo = splitToDate[0]+splitToDate[1]+splitToDate[2];
-
-			
-			if (dateTo < dateFrom) {
-				console.log('Change the date!');
-				btn.text('Generate Again');
-				$('#done').removeClass('success').addClass('block failed').text('Please change the date!');
-				$('#result').fadeIn();
-			} else {
-				if ($('#path').val().length != 0) {
-					var ajax = $.ajax({
-						type: method,
-						data: data,
-						url: action,
-						beforeSend: function() {
-							btn.text('Generating Files...');
-							console.log('Generating Files...');
-						}
-					});
-					ajax.done(function(res) {
-						btn.text('Generate Files');
-						$('#done').removeClass('failed').addClass('block success').text('DONE!');
-						console.log('Generating Files complete!');
-						$('#result').html(res).hide().fadeIn();
-					});
-				} else {
-					console.log('Fields Empty!');
-					btn.text('Generate Again');
-					$('#done').removeClass('success').addClass('block failed').text('Empty Fields!');
-					$('#result').fadeIn();
-				}
-			}
-		});
-	});
-</script>
-</body>
-</html>
+<?php require_once 'inc/footer.php'; ?>

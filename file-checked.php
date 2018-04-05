@@ -1,12 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>File Checker</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
 <?php
 
 error_reporting(0);
@@ -64,15 +55,12 @@ if($_POST['path'] && $_POST['newpath']) {
         $copyText[] = changePathToTextFile($endPath, $moveFilesx);
 
         $ex = explode("\\", $moveFiles);
-
         if(end($ex) != "Thumbs.db"){
             copy($file, $moveFilesx);
             $copied = 1;
-            echo $file . '<br><strong>copied to</strong><br><span class="strong">' . newDirectory($moveFilesx) .'</span><br><br>';
+            echo $file . '<strong>copied to </strong><span class="strong">' . newDirectory($moveFilesx) .'</span><br>';
         }
     }
-
-    
 
     foreach($array as $file) {
         if(is_file($file) ) {
@@ -98,14 +86,11 @@ if($_POST['path'] && $_POST['newpath']) {
     }
 
     if(isset($copyText) ) {
-        echo "<hr>Total files copied : (". count($copyText).")";
-        $insertToTextFile = str_replace("//", '/', str_replace(" ", '', (implode(" ", $copyText) ) ) );
+        // echo "<hr>Total files copied : (". count($copyText).")";
+        $insertToTextFile = str_replace("//", '/', (implode(" ", $copyText) ) );
         $fp = fopen($_POST['newpath'] . "/fileList.txt","wb");
         fwrite($fp,$insertToTextFile);
         fclose($fp);
     }
 
 }
-?>
-</body>
-</html>

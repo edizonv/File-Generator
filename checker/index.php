@@ -2,27 +2,29 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Delivery File Checker</title>
-	<link rel="stylesheet" href="../style.css">
+	<title>Delivery file checker</title>
+	<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/assets/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
 <br><br>
-	<form action="upload.php" method="POST">
-		<legend><h1>Delivery File Checker</h1></legend>
+	<form action="upload.php" method="POST" class="col-md-4 col-md-offset-4">
+		<legend><h2>Delivery file checker</h2></legend>
 		<br>
 		<dl>
-			<dt><label for="path">Folder Path:</label></dt>
-			<dd><input type="text" name="path" id="path"></dd>
-			<dt><label for="list">Filelist Path:</label></dt>
-			<dd><input type="text" name="list" id="list"></dd>
-			<dd><button>Check Files</button></dd>
+			<dt><label for="path">Folder path:</label></dt>
+			<dd><input type="text" name="path" id="path" class="form-control"></dd>
+			<dt><label for="list">Text file path:</label></dt>
+			<dd><input type="text" name="list" id="list" class="form-control"></dd>
+			<dd class="text-right"><button class="btn btn-primary btn-lg">Check Files</button></dd>
 		</dl>
-		<p><a href="../">Generate deliver files</a></p>
+		<p><a href="../"><< Generate deliver files</a></p>
 		<div id="done"></div>
     	<div id="result"></div>
 	</form>
 
-	<script src="../jquery.js"></script>
+	<script src="/assets/js/jquery.js"></script>
 	<script>
 		$(function() {
 			var btn = $('button');
@@ -49,15 +51,14 @@
 
 					ajax.done(function(res) {
 						btn.text('Check Files');
-						//$('#done').removeClass('failed').addClass('block success').text('DONE!');
 						console.log('Checking files complete!');
-						$('#result').html(res).hide().fadeIn();
-					});
+						$('#result').addClass('good').html(res).hide().fadeIn();
+          });
+          
 				} else {
 					btn.text('Check Again');
 					console.log('Check Again');
-					//$('#done').removeClass('success').addClass('block failed').text('Empty Fields!');
-					$('#result').hide().fadeIn();
+					$('#result').hide();
 				}
 
 			});
